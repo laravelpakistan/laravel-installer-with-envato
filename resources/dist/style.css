@@ -1,12 +1,5 @@
-/*
- * @version 1.0.0
- * @link https://codecanyon.net/user/abndevs/portfolio
- * @author Bishwajit Adhikary
- * @copyright (c) 2023 abnDevs
- * @license https://codecanyon.net/licenses/terms/regular
- */
 
-* {
+ * {
   margin: 0;
   padding: 0;
 }
@@ -14,7 +7,7 @@
 body,
 html {
   font-family: 'Urbanist', sans-serif;
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: 500;
   color: #8482ab;
   background-image: url('img/a.png');
@@ -91,7 +84,7 @@ img {
 .tooltip-inner {
   padding: .625rem 1rem;
   border-radius: .5rem;
-  background-color: #0d6efd;
+  background-color: #19875d;
   font-size: 14px;
   font-weight: 600;
 }
@@ -168,14 +161,13 @@ label {
 
 @media only screen and (min-width: 992px) {
   .installation-steps {
-    height: 100px;
+    height: 60px;
   }
 }
 
 .content {
   border: 2px solid #ebebeb;
   padding: 1.5rem 1.75rem;
-  border-radius: .75rem;
   margin-top: 80px;
   background-color: #fff;
 }
@@ -288,9 +280,7 @@ label {
 }
 
 .installation-steps>div.active {
-  background: -webkit-gradient(linear, right top, left top, from(rgba(25, 135, 93, 0.2)), to(#19875d));
-  background: -o-linear-gradient(right, rgba(25, 135, 93, 0.2), #19875d 100%);
-  background: linear-gradient(to left, rgba(25, 135, 93, 0.2), #19875d 100%);
+  background: #19875d;
   color: #fff;
 }
 
