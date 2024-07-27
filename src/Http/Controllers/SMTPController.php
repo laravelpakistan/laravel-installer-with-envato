@@ -4,7 +4,7 @@ namespace AbnDevs\Installer\Http\Controllers;
 use AbnDevs\Installer\Facades\License;
 use AbnDevs\Installer\Http\Requests\StoreSMTPRequest;
 use App\Http\Controllers\Controller;
-use Brotzka\DotenvEditor\DotenvEditor;
+use Jackiedo\DotenvEditor\DotenvEditor;
 use Illuminate\Support\Facades\Cache;
 
 class SMTPController extends Controller
@@ -55,7 +55,7 @@ class SMTPController extends Controller
 
         try {
 
-            $this->dotenvEditor->addData([
+            $this->dotenvEditor->setKeys([
                 'MAIL_MAILER' => $driver,
                 'MAIL_HOST' => $request->validated('host'),
                 'MAIL_PORT' => $request->validated('port'),
@@ -64,7 +64,7 @@ class SMTPController extends Controller
                 'MAIL_ENCRYPTION' => $request->validated('encryption'),
                 'MAIL_FROM_ADDRESS' => $request->validated('email'),
                 'MAIL_FROM_NAME' => $request->validated('name'),
-            ]);
+            ])->save();
 
             Cache::put('installer.smtp', true);
 

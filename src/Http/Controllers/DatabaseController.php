@@ -4,7 +4,7 @@ namespace AbnDevs\Installer\Http\Controllers;
 use AbnDevs\Installer\Facades\License;
 use AbnDevs\Installer\Http\Requests\StoreDatabaseRequest;
 use App\Http\Controllers\Controller;
-use Brotzka\DotenvEditor\DotenvEditor;
+use Jackiedo\DotenvEditor\DotenvEditor;
 use Exception;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
@@ -67,24 +67,19 @@ class DatabaseController extends Controller
 
         // Save database credentials
         try {
-            $this->dotenvEditor->addData([
-                'DB_CONNECTION' => $request->validated('driver'),
-                'DB_HOST' => $request->validated('host'),
-                'DB_PORT' => $request->validated('port'),
-                'DB_DATABASE' => $request->validated('database'),
-                'DB_USERNAME' => $request->validated('username'),
-                'DB_PASSWORD' => $request->validated('password'),
-            ]);
+            $this->updateDatabaseCredentials($request, false);
 
-//            // Migrate database
-//            Artisan::call('migrate:fresh --seed --force');
-//            Artisan::call('storage:link');
+           // Migrate database
+           Artisan::call('migrate:fresh --seed --force');
+           Artisan::call('storage:link');
 
             Cache::put('installer.agreement', true);
             Cache::put('installer.requirements', true);
             Cache::put('installer.permissions', true);
             Cache::put('installer.license', true);
             Cache::put('installer.database', true);
+
+            $this->updateDatabaseCredentials($request, true);
 
             return response()->json([
                 'status' => 'success',
@@ -98,6 +93,28 @@ class DatabaseController extends Controller
                 'status' => 'error',
                 'message' => $e->getMessage()
             ], 400);
+        }
+    }
+
+    
+    /**
+     * Updating database credentials to .env
+     */
+    private function updateDatabaseCredentials($request, $persist)
+    {
+        $keys = [
+            'DB_CONNECTION' => $request->validated('driver'),
+            'DB_HOST' => $request->validated('host'),
+            'DB_PORT' => $request->validated('port'),
+            'DB_DATABASE' => $request->validated('database'),
+            'DB_USERNAME' => $request->validated('username'),
+            'DB_PASSWORD' => $request->validated('password'),
+        ];
+
+        if ($persist) {
+            $this->dotenvEditor->setKeys($keys)->save();
+        } else {
+            $this->dotenvEditor->setKeys($keys);
         }
     }
 
