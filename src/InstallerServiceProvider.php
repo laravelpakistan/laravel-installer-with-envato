@@ -33,7 +33,7 @@ class InstallerServiceProvider extends PackageServiceProvider
                     ->publishConfigFile()
                     ->publishAssets()
                     ->copyAndRegisterServiceProviderInApp()
-                    ->askToStarRepoOnGitHub('bishwajitcadhikary/laravel-installer');
+                    ->askToStarRepoOnGitHub('arcotic-Solutions-Ltd/laravel-installer-with-envato');
             });
     }
 
